@@ -44,10 +44,20 @@ class Lox {
 
 
 int main(int argc, char* argv[]) {
+    // std::cout << "You've enter " << argc << " arguments." << std::endl;
+    // // std::cout << "ARGV length: " << argv << "arguments" << std::endl;
+
+    // int i = 0;
+
+    // while (i < argc) {
+    //     std::cout << "Arg " << i + 1 << ": " << argv[i] << std::endl;
+    //     i++;
+    // }
+
     Lox lox;
 
     if (argc > 1) {
-        std::cout << "Usage: cpplox [scripts]" << std::endl;
+        std::cout << "Usage: CPPLox [scripts]" << std::endl;
         exit(64);
     } else if (argc == 1) {
         lox.runFile(argv[0]);
