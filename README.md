@@ -18,6 +18,6 @@ loxcpp/build % make
 # step 5: Run the executable directly without any file:
 loxcpp/build % ./loxcpp
 
-# step 6: Run the executable directly with file or passing arguments:
-loxcpp/build % ./loxcpp script.lox
+# step 6 (alternative to step 5): Run the executable directly with file or passing arguments:
+loxcpp/build % ./loxcpp <file.lox> # e.g ./loxcpp script.lox
 ```
