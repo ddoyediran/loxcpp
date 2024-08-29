@@ -33,33 +33,41 @@ class Lox {
     }
 
     void runPrompt() {
-        std::cout << "runPrompt called" << std::endl;
+        /**
+         * Function read user input typed on the terminal/ console.
+         * @param: null
+         * Returns: void
+         */
+        std::string line;
+
+        while(true) {
+            std::cout << "> ";
+
+            getline(std::cin, line);
+
+            if(line.empty()) {
+                break;
+            }
+
+            run(line);
+        }
     }
 
     void run(std::string source) {
-        std::cout << "Code is running 'run() function'" << std::endl;
+        std::cout << source << std::endl;
+        // std::cout << "Code is running 'run() function'" << std::endl;
     }
 
 };
 
 
 int main(int argc, char* argv[]) {
-    // std::cout << "You've enter " << argc << " arguments." << std::endl;
-    // // std::cout << "ARGV length: " << argv << "arguments" << std::endl;
-
-    // int i = 0;
-
-    // while (i < argc) {
-    //     std::cout << "Arg " << i + 1 << ": " << argv[i] << std::endl;
-    //     i++;
-    // }
-
     Lox lox;
 
-    if (argc > 1) {
+    if (argc > 2) {
         std::cout << "Usage: CPPLox [scripts]" << std::endl;
         exit(64);
-    } else if (argc == 1) {
+    } else if (argc == 2) {
         lox.runFile(argv[0]);
         //runFile(argv[0]);
     } else {
