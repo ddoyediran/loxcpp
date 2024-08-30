@@ -9,14 +9,16 @@
 
 class Lox {
 
-    //private: 
+    private: 
+    bool hadError = false;
+
     public:
     Lox() {
 
     }; 
 
     void runFile(const std::string& path) {
-        // Open the file in binary mode
+        // Open the file in binary mode and read the contents
         std::ifstream file(path, std::ios::binary);
 
         if (!file.is_open()) {
@@ -29,6 +31,14 @@ class Lox {
         bytes << file.rdbuf();
 
         run(bytes.str());
+
+        // optional: destructor automatically calls the member function close - because the object is destroyed 
+        // file.close(); 
+
+        // Indicate an error in the exit code.
+        if (hadError) {
+            exit(65);
+        }
 
     }
 
@@ -50,12 +60,32 @@ class Lox {
             }
 
             run(line);
+            hadError = false;
         }
     }
 
     void run(std::string source) {
-        std::cout << source << std::endl;
+        Scanner scanner(source);
+
+        std::vector<Token> tokens = scanner.scanTokens();
+
+        for(const Token& token : tokens) {
+            std::cout << token << std::endl;
+        }
+
+        // std::cout << source << std::endl;
         // std::cout << "Code is running 'run() function'" << std::endl;
+    }
+
+    void error(int line, std::string message) {
+        report(line, "", message);
+    }
+
+    private:
+    void report(int line, std::string where, std::string message) {
+        std::cout << "[line " << line << "] Error" << where << ": " << message << std::endl;
+
+        hadError = true;
     }
 
 };
