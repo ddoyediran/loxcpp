@@ -10,11 +10,11 @@
 class Lox {
 
     private: 
-    bool hadError = false;
+    bool hadError;
 
     public:
     Lox() {
-
+        hadError = false;
     }; 
 
     void runFile(const std::string& path) {
