@@ -6,6 +6,8 @@
 #include <vector>
 #include <sstream>
 
+#include "Token.cpp"
+
 
 class Lox {
 
@@ -13,8 +15,8 @@ class Lox {
     bool hadError;
 
     public:
-    Lox() {
-        hadError = false;
+    Lox() : hadError(false) {
+        // hadError = false;
     }; 
 
     void runFile(const std::string& path) {
