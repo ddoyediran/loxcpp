@@ -4,6 +4,7 @@ project(loxcpp VERSION 0.1.0 LANGUAGES CXX)
 
 set(SOURCE_FILES
     Lox.cpp
+    TokenType.cpp
     )
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
