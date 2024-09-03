@@ -17,5 +17,6 @@ enum TokenType {
     AND, CLASS, ELSE, FALSE, FUN, FOR, IF, NIL, OR,
     PRINT, RETURN, SUPER, THIS, TRUE, VAR, WHILE,
 
-    EOF
+    END_OF_FILE,
+    // EOF // can't use EOF in C++ due to conflicts with the keyword EOF
 };
