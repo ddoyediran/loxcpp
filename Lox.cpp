@@ -7,6 +7,7 @@
 #include <sstream>
 
 #include "Token.cpp"
+#include "TokenType.cpp"
 
 
 class Lox {
@@ -74,6 +75,10 @@ class Lox {
         for(const Token& token : tokens) {
             std::cout << token << std::endl;
         }
+
+        // for(const auto& token : tokens) {
+        //     std::cout << token << std::endl;
+        // }
 
         // std::cout << source << std::endl;
         // std::cout << "Code is running 'run() function'" << std::endl;
