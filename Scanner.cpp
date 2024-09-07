@@ -2,9 +2,9 @@
 #include <vector>
 #include <iostream>
 
-// #include "TokenType.cpp"
-#include "Token.cpp"
-#include "TokenType.h"
+#include "Token.h"
+//#include "TokenType.h"
+#include "Error.h"
 
 class Scanner {
     private:
@@ -15,9 +15,9 @@ class Scanner {
     int line;
 
     public:
-    Scanner() : start(0), current(0), line(0) {}
+    // Scanner() : start(0), current(0), line(0) {}
 
-    Scanner(std::string source) {
+    Scanner(std::string source) : start(0), current(0), line(1) {
         source = source;
     }
 
@@ -25,35 +25,99 @@ class Scanner {
         while (!isAtEnd()) {
             // We are at the beginning of the next lexeme.
             start = current;
-            // scanToken();
+            scanToken();
         }
 
-        Token token(TokenType::END_OF_FILE, "", NULL, line);
         // Token token(TokenType::END_OF_FILE, "", NULL, line);
+        // tokens.push_back(token);
 
-        // tokens.add(new Token(END_OF_FILE, "", NULL, line));
-        tokens.push_back(token);
+        tokens.push_back(Token(TokenType::END_OF_FILE, "", nullptr, line));
         return tokens;
     }
 
 
-    void getToken() {
-        Token token(TokenType::END_OF_FILE, "", NULL, line);
-        std::cout << token << std::endl;
-    }
+    // void getToken() {
+    //     // Token token(TokenType::END_OF_FILE, "", NULL, line);
+    //     // std::cout << token << std::endl;
+    //     // std::cout << Token(TokenType::::END_OF_FILE, "", nullptr, line) << std::endl;
+    //     std::cout << isAtEnd() << std::endl;
+    // }
 
 
     private:
     bool isAtEnd() {
         return current >= source.length();
     }
+
+    bool match(char expected) {
+        if(isAtEnd()) {
+            return false;
+        }
+
+        if(source.at(current) != expected) {
+            return false;
+        }
+
+        ++current;
+        return true;
+    }
+
+    void scanToken() {
+        char c = advance();
+        switch (c) {
+            case '(': addToken(TokenType::LEFT_PAREN); break;
+            case ')': addToken(TokenType::RIGHT_PAREN); break;
+            case '{': addToken(TokenType::LEFT_BRACE); break;
+            case '}': addToken(TokenType::RIGHT_BRACE); break;
+            case ',': addToken(TokenType::COMMA); break;
+            case '.': addToken(TokenType::DOT); break;
+            case '-': addToken(TokenType::MINUS); break;
+            case '+': addToken(TokenType::PLUS); break;
+            case ';': addToken(TokenType::SEMICOLON); break;
+            case '*': addToken(TokenType::STAR); break;
+            case '!':
+                addToken(match('=') ? TokenType::BANG_EQUAL : TokenType::BANG);
+                break;
+            case '=':
+                addToken(match('=') ? TokenType::EQUAL_EQUAL : TokenType::EQUAL);
+                break;
+            case '<':
+                addToken(match('=') ? TokenType::LESS_EQUAL : TokenType::LESS);
+                break;
+            case '>':
+                addToken(match('=') ? TokenType::GREATER_EQUAL : TokenType::GREATER);
+                break;
+
+            default:
+                error(line, "Unexpected character."); // from Error.h file
+                break;
+
+        };
+    }
+
+    char advance() {
+        // consumes the next character in the source file and returns it.
+        return source.at(current++);
+        // return source[current++];
+    }
+
+    void addToken(TokenType type) {
+        addToken(type, nullptr);
+    }
+
+    void addToken(TokenType type, std::string literal) {
+        // it grabs the text of the current lexeme and creates a new token for it
+        std::string text = source.substr(start, current - start);
+        tokens.push_back(Token(type, text, literal, line));
+    }
 };
 
 
-int main() {
+// int main() {
 
-    Scanner scanner;
+//     Scanner scanner("dami playing");
 
-    scanner.getToken();
+//     scanner.getToken();
+//     // scanner.scanTokens();
 
-}
+// }
