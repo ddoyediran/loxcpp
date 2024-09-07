@@ -6,7 +6,8 @@ set(SOURCE_FILES
     Lox.cpp
     TokenType.h
     Token.h
-    Scanner.cpp
+    Scanner.h
+    Error.h
     )
 
 set(CMAKE_CXX_STANDARD 11)
