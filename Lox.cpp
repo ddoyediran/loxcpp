@@ -6,19 +6,26 @@
 #include <vector>
 #include <sstream>
 
-#include "Token.cpp"
-#include "TokenType.cpp"
+// #include "Token.cpp"
+// #include "TokenType.cpp"
+// #include "TokenType.h"
+#include "Scanner.cpp"
+#include "Error.h"
 
 
 class Lox {
 
-    private: 
-    bool hadError;
+    //private: 
+    // bool hadError;
 
     public:
-    Lox() : hadError(false) {
+    Lox() {
         // hadError = false;
     }; 
+
+    // Lox() : hadError(false) {
+    //     // hadError = false;
+    // }; 
 
     void runFile(const std::string& path) {
         // Open the file in binary mode and read the contents
@@ -72,28 +79,30 @@ class Lox {
 
         std::vector<Token> tokens = scanner.scanTokens();
 
-        for(const Token& token : tokens) {
-            std::cout << token << std::endl;
-        }
+        // std::cout << "Tokens: " << tokens << std::endl;
 
-        // for(const auto& token : tokens) {
+        // for(const Token& token : tokens) {
         //     std::cout << token << std::endl;
         // }
+
+        for(const auto& token : tokens) {
+            std::cout << token << std::endl;
+        }
 
         // std::cout << source << std::endl;
         // std::cout << "Code is running 'run() function'" << std::endl;
     }
 
-    void error(int line, std::string message) {
-        report(line, "", message);
-    }
+    // void error(int line, std::string message) {
+    //     report(line, "", message);
+    // }
 
-    private:
-    void report(int line, std::string where, std::string message) {
-        std::cout << "[line " << line << "] Error" << where << ": " << message << std::endl;
+    // private:
+    // void report(int line, std::string where, std::string message) {
+    //     std::cout << "[line " << line << "] Error" << where << ": " << message << std::endl;
 
-        hadError = true;
-    }
+    //     hadError = true;
+    // }
 
 };
 
