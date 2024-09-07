@@ -9,7 +9,8 @@
 // #include "Token.cpp"
 // #include "TokenType.cpp"
 // #include "TokenType.h"
-#include "Scanner.cpp"
+// #include "Scanner.cpp"
+#include "Scanner.h"
 #include "Error.h"
 
 
@@ -59,6 +60,7 @@ class Lox {
          * Returns: void
          */
         std::string line;
+        // line = "(( )){}";
 
         while(true) {
             std::cout << "> ";
@@ -85,8 +87,9 @@ class Lox {
         //     std::cout << token << std::endl;
         // }
 
-        for(const auto& token : tokens) {
-            std::cout << token << std::endl;
+        for(const Token& token : tokens) {
+            std::cout << token.toString() << std::endl;
+            // std::cout << token << std::endl;
         }
 
         // std::cout << source << std::endl;
