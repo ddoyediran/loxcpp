@@ -102,11 +102,34 @@ class Scanner {
                 line++;
                 break;
 
+            case '"':
+                string();
+                break;
+
             default:
                 error(line, "Unexpected character."); // error() method from Error.h file
                 break;
 
         };
+    }
+
+    void string() {
+        while(peek() != '"' && !isAtEnd()) {
+            if(peek() == '\n') line++;
+            advance();
+        }
+
+        if(isAtEnd()) {
+            error(line, "Unterminated string.");
+            return;
+        }
+
+        // The closing ".
+        advance();
+
+        // Trim the surrounding quotes.
+        std::string value = source.substr(start + 1, current - 1);
+        addToken(TokenType::STRING, value);
     }
 
     char advance() {
@@ -116,7 +139,8 @@ class Scanner {
     }
 
     void addToken(TokenType type) {
-        addToken(type, nullptr);
+        addToken(type, "");
+        // addToken(type, nullptr);
     }
 
     void addToken(TokenType type, std::string literal) {
