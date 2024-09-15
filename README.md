@@ -31,7 +31,7 @@ loxcpp/build % cd build
 loxcpp/build % make
 
 # Step 3: Run the executable directly without any file:
-loxcpp/build % ./loxcpp
+loxcpp/build % ./loxcpp # type the code in the cmd line prompt.
 
 # Step 4 (alternative to step 3): Run the executable directly with file or passing arguments:
 loxcpp/build % ./loxcpp <file.lox> # e.g ./loxcpp script.lox
