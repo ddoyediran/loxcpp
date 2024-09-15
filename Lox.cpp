@@ -60,7 +60,6 @@ class Lox {
          * Returns: void
          */
         std::string line;
-        // line = "(( )){}";
 
         while(true) {
             std::cout << "> ";
@@ -76,8 +75,8 @@ class Lox {
         }
     }
 
-    void run(std::string source) {
-        Scanner scanner(source);
+    void run(std::string_view source) {
+        Scanner scanner {source};
 
         std::vector<Token> tokens = scanner.scanTokens();
 
@@ -91,21 +90,8 @@ class Lox {
             std::cout << token.toString() << std::endl;
             // std::cout << token << std::endl;
         }
-
-        // std::cout << source << std::endl;
-        // std::cout << "Code is running 'run() function'" << std::endl;
     }
 
-    // void error(int line, std::string message) {
-    //     report(line, "", message);
-    // }
-
-    // private:
-    // void report(int line, std::string where, std::string message) {
-    //     std::cout << "[line " << line << "] Error" << where << ": " << message << std::endl;
-
-    //     hadError = true;
-    // }
 
 };
 
@@ -117,11 +103,11 @@ int main(int argc, char* argv[]) {
         std::cout << "Usage: CPPLox [scripts]" << std::endl;
         exit(64);
     } else if (argc == 2) {
-        lox.runFile(argv[0]);
+        // lox.runFile(argv[0]);
+        lox.runFile(argv[1]);
         //runFile(argv[0]);
     } else {
         lox.runPrompt();
         //runPrompt();
     }
 }
-
