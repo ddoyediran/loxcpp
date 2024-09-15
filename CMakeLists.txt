@@ -10,6 +10,6 @@ set(SOURCE_FILES
     Error.h
     )
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 20)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
