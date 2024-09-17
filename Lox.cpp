@@ -6,10 +6,6 @@
 #include <vector>
 #include <sstream>
 
-// #include "Token.cpp"
-// #include "TokenType.cpp"
-// #include "TokenType.h"
-// #include "Scanner.cpp"
 #include "Scanner.h"
 #include "Error.h"
 
@@ -79,8 +75,6 @@ class Lox {
         Scanner scanner {source};
 
         std::vector<Token> tokens = scanner.scanTokens();
-
-        // std::cout << "Tokens: " << tokens << std::endl;
 
         // for(const Token& token : tokens) {
         //     std::cout << token << std::endl;
