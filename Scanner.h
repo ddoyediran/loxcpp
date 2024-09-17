@@ -3,6 +3,8 @@
 #include <vector>
 #include <iostream>
 #include <utility> // to use std::move
+#include <map>
+#include <unordered_map>
 
 #include "Token.h"
 //#include "TokenType.h"
@@ -15,6 +17,8 @@ class Scanner {
     int start = 0;
     int current = 0;
     int line = 1;
+    static const std::map<std::string, TokenType> keywords;
+
 
     public:
     // Scanner() : start(0), current(0), line(0) {}
@@ -29,9 +33,6 @@ class Scanner {
             start = current;
             scanToken();
         }
-
-        // Token token(TokenType::END_OF_FILE, "", NULL, line);
-        // tokens.push_back(token);
 
         // tokens.push_back(Token(TokenType::END_OF_FILE, "", "", line));
         // tokens.push_back(Token(TokenType::END_OF_FILE, "", nullptr, line));
@@ -112,11 +113,41 @@ class Scanner {
             default:
                 if(isDigit(c)) {
                     number();
+                } else if(isAlpha(c)) {
+                    identifier();
                 } else {
                     error(line, "Unexpected character."); // error() method from Error.h file
                 }
                 break;
         };
+    }
+
+    void identifier() {
+        while(isAlphaNumeric(peek())) advance();
+
+        // std::string text {source.substr(start, current - start)};
+        std::string text = std::string{source.substr(start, current - start)};
+
+        // TokenType type = keywords.at(text);
+        TokenType type;
+
+        auto match = keywords.find(text);
+
+        if(match == keywords.end()) {
+            type = TokenType::IDENTIFIER;
+        } else {
+            type = match->second;
+        }
+        
+        addToken(type);
+    }
+
+    bool isAlpha(char c) {
+        return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c == '_'); 
+    }
+
+    bool isAlphaNumeric(char c) {
+        return isAlpha(c) || isDigit(c);
     }
 
     bool isDigit(char c) {
@@ -135,8 +166,6 @@ class Scanner {
         }
 
         addToken(TokenType::NUMBER, std::stod(std::string{source.substr(start, current - start)}));
-
-        // addToken(TokenType::NUMBER, std::stod(std::string{source.substr(start, current - start)}));
     }
 
     void string() {
@@ -154,7 +183,7 @@ class Scanner {
         advance();
 
         // Trim the surrounding quotes.
-        // std::string value = source.substr(start + 1, current - 2 - start);
+        // std::string value = std::string(source.substr(start + 1, current - 2 - start));
         std::string value {source.substr(start + 1, current - 2 - start)};
         addToken(TokenType::STRING, value);
     }
@@ -162,7 +191,6 @@ class Scanner {
     char advance() {
         // consumes the next character in the source file and returns it.
         return source[current++];
-        // return source[current++];
     }
 
     void addToken(TokenType type) {
@@ -172,7 +200,7 @@ class Scanner {
 
     void addToken(TokenType type, std::any literal) {
         // it grabs the text of the current lexeme and creates a new token for it
-        // std::string text = source.substr(start, current - start);
+        // std::string text = std::string(source.substr(start, current - start));
         std::string text{source.substr(start, current - start)};
         // tokens.push_back(Token(type, text, literal, line));
         tokens.emplace_back(type, std::move(text), std::move(literal), line);
@@ -192,4 +220,23 @@ class Scanner {
         return source[current + 1];
     }
 
+};
+
+const std::map<std::string, TokenType> Scanner::keywords = {
+    {"and", TokenType::AND},
+    {"class", TokenType::CLASS},
+    {"else", TokenType::ELSE},
+    {"false", TokenType::FALSE},
+    {"for", TokenType::FOR},
+    {"fun", TokenType::IF},
+    {"if", TokenType::IF},
+    {"nil", TokenType::NIL},
+    {"or", TokenType::OR},
+    {"print", TokenType::PRINT},
+    {"return", TokenType::RETURN},
+    {"super", TokenType::SUPER},
+    {"this", TokenType::THIS},
+    {"true", TokenType::TRUE},
+    {"var", TokenType::VAR},
+    {"while", TokenType::WHILE}
 };
