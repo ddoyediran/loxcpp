@@ -29,7 +29,21 @@ class GenerateAst {
     }
 
     private:
-    
+    std::string_view trim(std::string_view str) {
+        std::size_t end = str.size() - 1;
+
+        std::size_t start = 0;
+        
+        while(start <= end && std::isspace(str[start])) {
+            ++start;
+        }
+
+        while(end >= start && std::isspace(str[end])) {
+            --end;
+        }
+        
+        return str.substr(start, end - start + 1);
+    }
     
 };
 
