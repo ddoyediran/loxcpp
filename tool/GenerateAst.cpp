@@ -44,6 +44,37 @@ class GenerateAst {
         
         return str.substr(start, end - start + 1);
     }
+
+    std::vector<std::string> split(std::string_view str, char separator) {
+        /**
+         * Split a string into an array of strings.
+         * Splits this string around matches of the given regular expression.
+         * Returns a std::vector<std::string>
+         */
+        std::vector<std::string> splitResult = {};
+
+        std::string splittedString = "";
+
+        // loop through the string
+        for(int i = 0; i <= str.size(); ++i) {
+            // if the char != separator concatenate it to the splittedString 
+            if(str[i] != separator) {
+                splittedString += str[i];
+            } else {
+                // if the char == separator, push the splittedString to splitResult vector and reset splittedString to empty string
+                splitResult.push_back(splittedString);
+                splittedString = "";
+            }
+
+        }
+
+        if (!splittedString.empty()) {
+            splitResult.push_back(splittedString);
+            // splittedString = "";
+        }
+
+        return splitResult;
+    }
     
 };
 
