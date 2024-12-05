@@ -12,15 +12,21 @@ class GenerateAst {
         std::string path = outputDir + "/" + baseName + ".cpp";
         std::ofstream writer{path};
 
-        writer << "#pragma once" << std::endl;
+        writer << "#pragma once";
         writer << std::endl;
 
-        writer << "#include <vector>" << std::endl;
+        writer << "#include <vector>";
         writer << std::endl;
 
         writer << "class " << baseName << " {" << std::endl;
 
         // The AST classes.
+        for (std::string type: types) {
+            std::vector<std::string> splittedExpr = split(type, ':');
+
+            std::string classname = trim(splittedExpr[0]);
+            std::string fields = trim(splittedExpr[1]);
+        }
 
 
         writer << "}" << std::endl;
@@ -29,7 +35,12 @@ class GenerateAst {
     }
 
     private:
-    std::string_view trim(std::string_view str) {
+    std::string trim(std::string str) {
+        /**
+         * Trim white space(s) from the front and back of a string.
+         * @Params str: std::string.
+         * Returns str std::string.
+         */
         std::size_t end = str.size() - 1;
 
         std::size_t start = 0;
@@ -56,7 +67,7 @@ class GenerateAst {
         std::string splittedString = "";
 
         // loop through the string
-        for(int i = 0; i <= str.size(); ++i) {
+        for(int i = 0; i < str.size(); ++i) {
             // if the char != separator concatenate it to the splittedString 
             if(str[i] != separator) {
                 splittedString += str[i];
@@ -70,7 +81,6 @@ class GenerateAst {
 
         if (!splittedString.empty()) {
             splitResult.push_back(splittedString);
-            // splittedString = "";
         }
 
         return splitResult;
